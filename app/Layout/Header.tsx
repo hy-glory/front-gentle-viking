@@ -1,15 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // 로그인 로직 추가
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem('gv-auth') === 'true';
+  });
 
   const handleLogout = () => {
-    // 로그아웃 로직 추가
-    setIsLoggedIn(false);
+    localStorage.removeItem('gv-auth');
+    location.href = '/';
   };
 
   return (
