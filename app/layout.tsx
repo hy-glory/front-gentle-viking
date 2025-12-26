@@ -18,7 +18,7 @@ export default function RootLayout({
       <body>
         <div className="min-h-screen flex flex-col">
           <Header />
-          <main className="flex-1 bg-gradient-to-b from-zinc-950 via-blue-950/70 to-zinc-900 text-zinc-100 px-[24px] py-[24px] md:px-[32px]">
+          <main className="flex-1 bg-gradient-to-b from-zinc-950 via-blue-950/70 to-zinc-900 text-zinc-900 px-[24px] py-[24px] md:px-[32px]">
             <div className="mx-auto max-w-[1100px]">{children}</div>
           </main>
           <Footer />
