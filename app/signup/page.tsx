@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { use, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { BasicForm, RiskProfile } from '@/lib/signup/types';
@@ -69,6 +69,68 @@ const SignupPage = () => {
     phone: false,
     consetRequired: false,
   });
+
+  const pwRules = useMemo(
+    () => checkPassword(basicForm.pw1),
+    [basicForm.pw1]
+  );
+
+  const basicErrors = useMemo(() => {
+    const e: Partial<Record<keyof BasicForm, string>> = {};
+
+    if (!basicForm.name.trim()) e.name = '이름을 입력해주세요.';
+    if (!basicForm.nickname.trim())
+      e.nickname = '닉네임을 입력해주세요.';
+
+    if (!basicForm.email.trim()) e.email = '이메일을 입력해주세요.';
+    else if (!isEmailValid(basicForm.email))
+      e.email = '이메일 형식이 올바르지 않습니다.';
+    if (!basicForm.birthdate)
+      e.birthdate = '생년월일을 선택해주세요.';
+
+    if (!basicForm.pw1) e.pw1 = '비밀번호를 입력해주세요.';
+    else if (!isPasswordValid(basicForm.pw1))
+      e.pw1 = '비밀번호 조건을 확인해주세요.';
+    if (!basicForm.pw2) e.pw2 = '비밀번호를 한 번 더 입력해주세요.';
+    else if (basicForm.pw2 !== basicForm.pw1)
+      e.pw2 = '비밀번호가 일치하지 않습니다.';
+
+    if (!basicForm.consetRequired)
+      e.consetRequired = '필수 동의가 필요합니다.';
+
+    return e;
+  }, [basicForm]);
+
+  const canGoStep2 = useMemo(
+    () => Object.keys(basicErrors).length === 0,
+    [basicErrors]
+  );
+
+  const surveyScore = useMemo(() => {
+    let s = 0;
+    s += (
+      { PRESERVE: 1, STABLE: 2, GROWTH: 3, AGGRESSIVE: 4 } as const
+    )[survey.goal];
+    s += ({ LT3M: 1, M3TO12: 2, Y1TO3: 3, GT3Y: 4 } as const)[
+      survey.horizon
+    ];
+    s += ({ LT5: 1, LT10: 2, LT20: 3, GT30: 4 } as const)[
+      survey.lossTolerance
+    ];
+    s += (
+      { NONE: 1, SAVING: 2, STOCK_ETF: 3, DERIV_CRYPTO: 4 } as const
+    )[survey.experience];
+    s += ({ LOW: 1, MID: 2, HIGH: 3 } as const)[survey.volatility];
+    return s;
+  }, [survey]);
+
+  const surveyLabel = useMemo(() => {
+    if (surveyScore <= 8) return '안정형';
+    if (surveyScore <= 11) return '안정추구형';
+    if (surveyScore <= 14) return '위험중립형';
+    if (surveyScore <= 17) return '적극투자형';
+    return '공격투자형';
+  }, [surveyScore]);
 };
 
 export default SignupPage;
