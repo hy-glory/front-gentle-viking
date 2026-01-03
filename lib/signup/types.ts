@@ -1,4 +1,4 @@
-export type SignupForm = {
+export type BasicForm = {
   name: string;
   email: string;
   pw1: string;
@@ -18,6 +18,6 @@ export type RiskProfile = {
 };
 
 export type SignupDraft = {
-  basic: SignupForm;
+  basic: BasicForm;
   survey?: RiskProfile;
 };
