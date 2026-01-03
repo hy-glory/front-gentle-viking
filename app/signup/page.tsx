@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { SignupForm, RiskProfile } from '@/lib/signup/types';
+import { BasicForm, RiskProfile } from '@/lib/signup/types';
 import { REQUIRED_CONSENT_TEXT } from '@/lib/signup/consent';
 
 type Step = 1 | 2;
@@ -33,6 +33,42 @@ function isPasswordValid(pw: string) {
   return r.lengthOk && r.hasLetter && r.hasNumber && r.noSpace;
 }
 
-const signup = () => {};
+const SignupPage = () => {
+  const router = useRouter();
 
-export default signup;
+  const [step, setStep] = useState<Step>(1);
+
+  const [basicForm, setBasicForm] = useState<BasicForm>({
+    name: '',
+    email: '',
+    pw1: '',
+    pw2: '',
+    nickname: '',
+    birthdate: '',
+    phone: '',
+    consetRequired: false,
+  });
+
+  const [survey, setSurvey] = useState<RiskProfile>({
+    goal: 'PRESERVE',
+    horizon: 'LT3M',
+    lossTolerance: 'LT5',
+    experience: 'NONE',
+    volatility: 'LOW',
+  });
+
+  const [touched, setTouched] = useState<
+    Record<keyof BasicForm, boolean>
+  >({
+    name: false,
+    email: false,
+    pw1: false,
+    pw2: false,
+    nickname: false,
+    birthdate: false,
+    phone: false,
+    consetRequired: false,
+  });
+};
+
+export default SignupPage;
