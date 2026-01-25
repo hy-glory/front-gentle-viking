@@ -2,7 +2,7 @@
 
 import { RiskProfile } from '@/lib/signup/types';
 
-export default function SignupForm({
+export default function Survey({
   value,
   onChange,
   score,
