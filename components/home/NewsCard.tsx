@@ -4,7 +4,7 @@ export default function NewsCard() {
   const n = mockNews;
 
   return (
-    <article className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4 shadow-sm">
+    <article className="h-full rounded-2xl border border-neutral-200 bg-neutral-50 p-4 shadow-sm">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-base font-semibold text-neutral-900">
           오늘의 메인 뉴스
@@ -21,7 +21,9 @@ export default function NewsCard() {
         <p className="mt-2 text-lg font-semibold leading-snug">
           {n.title}
         </p>
-        <p className="mt-2 text-sm text-neutral-900">{n.summary}</p>
+        <p className="mt-2 text-sm text-neutral-900 leading-5 line-clamp-2 min-h-[40px]">
+          {n.summary}
+        </p>
       </div>
 
       <div className="mt-4 flex gap-2">

@@ -10,11 +10,16 @@ export default function AssetsCard() {
   const pnlAbs = Math.abs(a.pnlKRW);
 
   return (
-    <section className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4 shadow-sm">
-      <h2 className="text-base font-semibold">내 총 자산</h2>
+    <section className="h-full rounded-2xl border border-neutral-200 bg-neutral-50 p-4 shadow-sm">
+      <div className="flex justify-between">
+        <h2 className="text-base font-semibold">내 총 자산</h2>
+        <button className="font-semibold text-sky-700 hover:text-sky-500 transition">
+          상세 보기
+        </button>
+      </div>
 
       <div className="mt-3 rounded-xl bg-neutral-800/10 p-4">
-        <p className="text-sm text-neutral-600">총 평가자산</p>
+        <p className="text-sm text-neutral-800">총 평가자산</p>
         <p className="mt-1 text-2xl font-semibold">
           {formatKRW(a.totalKRW)}원
         </p>
@@ -39,12 +44,6 @@ export default function AssetsCard() {
             {formatKRW(pnlAbs)}원 ({(a.pnlRate * 100).toFixed(2)}%)
           </span>
         </div>
-      </div>
-
-      <div className="mt-4 flex gap-2">
-        <button className="rounded-xl bg-neutral-200 px-3 py-2 text-sm hover:bg-neutral-300 transition">
-          상세 보기
-        </button>
       </div>
     </section>
   );
